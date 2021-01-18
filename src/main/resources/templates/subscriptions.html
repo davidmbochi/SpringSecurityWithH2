@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-12 bg-light d-flex justify-content-center">
+                <h1>We make your fitness a priority</h1>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="container" th:each="subscription : ${subscriptionsData}">
+    <div class="row">
+        <div class="col-12">
+            <div class="card" style="margin-bottom: 20px">
+                <div class="card-header">
+                    <span th:if="${subscription.cost == 1500}">Beginner</span>
+                    <span th:if="${subscription.cost == 3000}">Intermediate</span>
+                    <span th:if="${subscription.cost == 5500}">Professional</span>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title" th:text="'$'+${subscription.cost}"></h5>
+                    <p class="card-text" th:text="${subscription.description}"></p>
+                    <a href="#" class="btn btn-primary">Subscribe</a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
