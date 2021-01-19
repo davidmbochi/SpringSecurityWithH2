@@ -1,5 +1,6 @@
 package com.david.SpringSecurityWithH2.entity;
 
+import com.david.SpringSecurityWithH2.User.MemberUser;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonSetter;
@@ -17,6 +18,8 @@ public class Subscription {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String name;
+
     @Column(unique = true)
     private BigDecimal cost;
 
@@ -33,9 +36,38 @@ public class Subscription {
 
     private long duration;
 
-
-    @OneToOne(mappedBy = "subscription")
+    @OneToOne(mappedBy = "subscription",cascade = CascadeType.ALL)
     private User user;
+
+    public Subscription(){
+
+    }
+
+    public Subscription(BigDecimal cost,
+                        String description,
+                        @FutureOrPresent LocalDate startDate,
+                        @Future LocalDate endDate,
+                        long duration) {
+        this.cost = cost;
+        this.description = description;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.duration = duration;
+    }
+
+    public Subscription(BigDecimal cost,
+                        String description,
+                        @FutureOrPresent LocalDate startDate,
+                        @Future LocalDate endDate,
+                        long duration,
+                        User user) {
+        this.cost = cost;
+        this.description = description;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.duration = duration;
+        this.user = user;
+    }
 
     public Long getId() {
         return id;
@@ -56,7 +88,13 @@ public class Subscription {
         return false;
     }
 
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public void setId(Long id) {
         this.id = id;

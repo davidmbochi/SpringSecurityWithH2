@@ -1,9 +1,8 @@
 package com.david.SpringSecurityWithH2.User;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.david.SpringSecurityWithH2.entity.Subscription;
+
+import javax.persistence.*;
 
 public class MemberUser{
 
@@ -16,7 +15,7 @@ public class MemberUser{
     private String username;
     private String password;
 
-    public void MemberUser(){
+    public MemberUser(){
 
     }
 

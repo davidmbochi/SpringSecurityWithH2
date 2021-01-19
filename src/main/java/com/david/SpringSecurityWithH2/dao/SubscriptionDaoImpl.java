@@ -27,12 +27,12 @@ public class SubscriptionDaoImpl implements SubscriptionDao{
     }
 
     @Override
-    public Subscription findSubscriptionById(Long id) {
+    public Subscription findSubscriptionByName(String name) {
         Session currentSession = entityManager.unwrap(Session.class);
 
-        Query<Subscription> theQuery = currentSession.createQuery("from Subscription where id=:theId",Subscription.class);
+        Query<Subscription> theQuery = currentSession.createQuery("from Subscription where name=:theName",Subscription.class);
 
-        theQuery.setParameter("theId",id);
+        theQuery.setParameter("theName",name);
 
         Subscription theSubscription = null;
 

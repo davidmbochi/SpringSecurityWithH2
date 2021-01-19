@@ -27,9 +27,9 @@ public class SubscriptionController {
         subscriptionService.saveSubscription(subscription);
     }
 
-    @GetMapping("/findSubscription/{id}")
-    public Subscription findSubscriptionById(@PathVariable("id") Long id){
-        return subscriptionService.findSubscriptionById(id);
+    @GetMapping("/findSubscription/{name}")
+    public Subscription findSubscriptionByName(@PathVariable("name") String name){
+        return subscriptionService.findSubscriptionByName(name);
     }
 
     @GetMapping("/findAllSubscriptions")

@@ -6,6 +6,6 @@ import java.util.Collection;
 
 public interface SubscriptionDao {
     void saveSubscription(Subscription subscription);
-    Subscription findSubscriptionById(Long id);
+    Subscription findSubscriptionByName(String name);
     Collection<Subscription> findAllSubscriptions();
 }

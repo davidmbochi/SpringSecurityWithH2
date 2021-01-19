@@ -6,6 +6,6 @@ import java.util.Collection;
 
 public interface SubscriptionService {
     void saveSubscription(Subscription subscription);
-    Subscription findSubscriptionById(Long id);
+    Subscription findSubscriptionByName(String name);
     Collection<Subscription> findAllSubscriptions();
 }

@@ -7,7 +7,7 @@ import java.util.Collection;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Long id;
     private String firstName;
     private String lastName;
     private String email;
@@ -21,22 +21,35 @@ public class User {
     )
     private Collection<Role> roles;
 
-
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "sub_id")
     private Subscription subscription;
 
 
-    public void User(){
+    public User(){
 
     }
 
-    public Long getUserId() {
-        return userId;
+    public User(
+                String firstName,
+                String lastName,
+                String email,
+                String username,
+                String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.username = username;
+        this.password = password;
     }
 
-    public void setUserId(Long id) {
-        this.userId = id;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstName() {

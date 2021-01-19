@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -44,14 +45,16 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional
     public User findUserByUsername(String username) {
         return userDao.findUserByUsername(username);
     }
 
     @Override
+    @Transactional
     public void saveMember(MemberUser memberUser) {
         User user = new User();
-        user.setUserId(memberUser.getId());
+        user.setId(memberUser.getId());
         user.setFirstName(memberUser.getFirstName());
         user.setLastName(memberUser.getLastName());
         user.setEmail(memberUser.getEmail());
@@ -64,6 +67,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional
     public void saveTrainer(TrainerUser trainerUser) {
         User user = new User();
         user.setFirstName(trainerUser.getFirstName());
@@ -78,28 +82,30 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional
     public User findMemberById(Long userId) {
         return userDao.findMemberById(userId);
     }
 
     @Override
+    @Transactional
     public void memberSubscription(Long id, Subscription subscription) {
         User theUser = userDao.findMemberById(id);
         logger.info("The user retrieved is "+theUser.getUsername());
 
-        Subscription theSubscription = subscriptionDao.findSubscriptionById(subscription.getId());
+        Subscription theSubscription = subscriptionDao.findSubscriptionByName(subscription.getName());
 
         logger.info("The subscription retrieved is "+theSubscription.getDescription());
 
         if ((theUser != null)&&(theSubscription != null)){
             theUser.setSubscription(theSubscription);
-            subscription.setUser(theUser);
             userDao.saveMember(theUser);
         }
 
     }
 
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userDao.findUserByUsername(username);
         if (user==null){

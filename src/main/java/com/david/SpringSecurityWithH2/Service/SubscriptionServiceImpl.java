@@ -44,8 +44,8 @@ public class SubscriptionServiceImpl implements SubscriptionService{
     }
 
     @Override
-    public Subscription findSubscriptionById(Long id) {
-        return subscriptionDao.findSubscriptionById(id);
+    public Subscription findSubscriptionByName(String name) {
+        return subscriptionDao.findSubscriptionByName(name);
     }
 
     @Override

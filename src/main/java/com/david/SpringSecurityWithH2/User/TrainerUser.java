@@ -14,7 +14,7 @@ public class TrainerUser {
     private String username;
     private String password;
 
-    public  void TrainerUser(){
+    public TrainerUser(){
 
     }
 
