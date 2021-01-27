@@ -1,6 +1,5 @@
 package com.david.SpringSecurityWithH2.entity;
 
-import com.david.SpringSecurityWithH2.User.MemberUser;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonSetter;
@@ -36,7 +35,7 @@ public class Subscription {
 
     private long duration;
 
-    @OneToOne(mappedBy = "subscription",cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "subscription",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private User user;
 
     public Subscription(){

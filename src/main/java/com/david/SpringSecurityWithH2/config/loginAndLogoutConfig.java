@@ -30,10 +30,29 @@ public class loginAndLogoutConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-       http.authorizeRequests()
-               .anyRequest()
-               .permitAll();
-       http.headers().frameOptions().disable();
+
+        http.headers().frameOptions().disable();
+
+        http
+                .authorizeRequests()
+                .antMatchers("/").hasAnyRole("MEMBER","ADMIN","TRAINER")
+                .antMatchers("/findAllSubscriptions").hasAnyRole("MEMBER","ADMIN","TRAINER")
+                .antMatchers("/saveMember").permitAll()
+                .antMatchers("/saveTrainer").hasRole("ADMIN")
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .loginProcessingUrl("/processLogin")
+                .defaultSuccessUrl("/findAllSubscriptions")
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login")
+                .and()
+                .exceptionHandling()
+                .accessDeniedPage("/accessDenied");
+
+
     }
 
     @Bean

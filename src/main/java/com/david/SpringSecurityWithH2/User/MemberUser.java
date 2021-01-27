@@ -1,18 +1,29 @@
 package com.david.SpringSecurityWithH2.User;
 
-import com.david.SpringSecurityWithH2.entity.Subscription;
-
-import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
 
 public class MemberUser{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "first name is required")
     private String firstName;
+
+    @NotBlank(message = "last name is required")
     private String lastName;
+
+    @NotBlank(message = "email is required")
     private String email;
+
+    @NotBlank(message = "username is required")
     private String username;
+
+    @NotBlank(message = "password is required")
     private String password;
 
     public MemberUser(){

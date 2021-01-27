@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">
+                        first Name
+                    </th>
+                    <th scope="col">
+                        last Name
+                    </th>
+                    <th scope="col">
+                        Subscription
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="theDetails : ${details}">
+                    <td th:text="${theDetails.firstName}"></td>
+                    <td th:text="${theDetails.lastName}"></td>
+                    <td th:text="${theDetails.subscription.name}"></td>
+                </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

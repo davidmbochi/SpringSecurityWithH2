@@ -21,7 +21,7 @@ public class User {
     )
     private Collection<Role> roles;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "sub_id")
     private Subscription subscription;
 

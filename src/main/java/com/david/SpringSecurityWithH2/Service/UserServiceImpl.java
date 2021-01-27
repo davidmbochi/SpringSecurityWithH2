@@ -8,11 +8,14 @@ import com.david.SpringSecurityWithH2.dao.UserDao;
 import com.david.SpringSecurityWithH2.entity.Role;
 import com.david.SpringSecurityWithH2.entity.Subscription;
 import com.david.SpringSecurityWithH2.entity.User;
+import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -89,19 +92,32 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional
-    public void memberSubscription(Long id, Subscription subscription) {
-        User theUser = userDao.findMemberById(id);
-        logger.info("The user retrieved is "+theUser.getUsername());
+    public Boolean subscribeMemberToPackage(String name) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
 
-        Subscription theSubscription = subscriptionDao.findSubscriptionByName(subscription.getName());
+        User user = userDao.findUserByUsername(username);
+        logger.info("The following user was retrieved "+user.getUsername());
 
-        logger.info("The subscription retrieved is "+theSubscription.getDescription());
+        Subscription subscription = subscriptionDao.findSubscriptionByName(name);
 
-        if ((theUser != null)&&(theSubscription != null)){
-            theUser.setSubscription(theSubscription);
-            userDao.saveMember(theUser);
-        }
+        logger.info("The following subscription was found "+subscription.getId());
 
+        userDao.subscribeMemberToPackage(subscription.getId(),user.getUsername());
+
+        return true;
+
+    }
+
+    @Override
+    public User userSubscription() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        String username = authentication.getName();
+
+        User theUser = userDao.findUserByUsername(username);
+
+        return theUser;
     }
 
     @Override

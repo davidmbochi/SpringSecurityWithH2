@@ -32,7 +32,7 @@
                 <div class="card-body">
                     <h5 class="card-title" th:text="'$'+${subscription.cost}"></h5>
                     <p class="card-text" th:text="${subscription.description}"></p>
-                    <a href="#" class="btn btn-primary">Subscribe</a>
+                    <a th:href="@{/api/v1/subscription(name=${subscription.name})}" class="btn btn-primary">Apply</a>
                 </div>
             </div>
 

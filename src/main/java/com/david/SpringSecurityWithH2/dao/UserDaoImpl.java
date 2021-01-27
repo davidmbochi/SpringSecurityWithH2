@@ -1,8 +1,12 @@
 package com.david.SpringSecurityWithH2.dao;
 
+import com.david.SpringSecurityWithH2.entity.Subscription;
 import com.david.SpringSecurityWithH2.entity.User;
+import com.david.SpringSecurityWithH2.entity.UserData;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -11,6 +15,7 @@ import javax.persistence.EntityManager;
 
 @Repository
 public class UserDaoImpl implements UserDao{
+    private Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);
     private final EntityManager entityManager;
 
     @Autowired
@@ -66,4 +71,20 @@ public class UserDaoImpl implements UserDao{
 
         return theUser;
     }
+
+    @Override
+    public Boolean subscribeMemberToPackage(Long sub_id, String username) {
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        Query theQuery = currentSession.createQuery("update User set sub_id=:theSubId where username=:theUsername");
+
+        theQuery.setParameter("theSubId",sub_id);
+
+        theQuery.setParameter("theUsername",username);
+
+        theQuery.executeUpdate();
+
+        return true;
+    }
+
 }
