@@ -93,17 +93,20 @@ public class UserServiceImpl implements UserService{
     @Override
     @Transactional
     public Boolean subscribeMemberToPackage(String name) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
 
-        User user = userDao.findUserByUsername(username);
+        User user = userDao.findUserByUsername(getLoggedInUser());
+
         logger.info("The following user was retrieved "+user.getUsername());
 
         Subscription subscription = subscriptionDao.findSubscriptionByName(name);
 
         logger.info("The following subscription was found "+subscription.getId());
 
-        userDao.subscribeMemberToPackage(subscription.getId(),user.getUsername());
+        if (user.getSubscription() != null){
+            throw new IllegalStateException("You can not register for another package");
+        }else {
+            userDao.subscribeMemberToPackage(subscription.getId(),user.getUsername());
+        }
 
         return true;
 
@@ -111,13 +114,20 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User userSubscription() {
+
+        User theUser = userDao.findUserByUsername(getLoggedInUser());
+
+        return theUser;
+    }
+
+    public  String getLoggedInUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         String username = authentication.getName();
 
-        User theUser = userDao.findUserByUsername(username);
+        logger.info("logged in user is "+username);
 
-        return theUser;
+        return username;
     }
 
     @Override
